@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect,url_for
 from flask_socketio import join_room, leave_room, send, SocketIO
 import random
+import time
 from string import ascii_uppercase
 
 app = Flask(__name__)
@@ -57,8 +58,9 @@ def message(data):
     
     content = {
         "name": session.get("name"),
-        "message": data["data"]
-        #put time here for fix
+        "message": data["data"],
+        "time":  time.strftime("%H:%M:%S",time.localtime())
+
     }
     send(content,to=room)
     rooms[room]["messages"].append(content)

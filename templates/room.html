@@ -35,7 +35,7 @@
 <script type = "text/javascript">
     var socketio = io();
     const messages = document.getElementById("messages")
-    const createMessage = (name, msg) => {
+    const createMessage = (name, msg, time) => {
         const content = `
         <div class = "text">
         <div>
@@ -43,7 +43,7 @@
                 <strong>${name}</strong>: ${msg}
             </span>
             <span class = "muted">
-                ${new Date().toLocaleString()}
+                ${time}
         </div>
 
         `;
