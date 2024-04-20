@@ -12,6 +12,28 @@
     <canvas id="whiteboardCanvas" height="500" width="500"></canvas>
     <button onclick="clearCanvas()">Clear</button>
 </div>
+<button onclick="hideWhiteboard()">Hide Whiteboard</button>
+<button onclick-"showWhiteboard()">Show Whiteboard</button>
+<script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
+<script>
+window.addEventListener('load', function () {
+  initWhiteboard();
+});
+
+
+function hideWhiteboard() {
+    const whiteboard = document.querySelector('.whiteboard');
+    whiteboard.style.display = 'none'; // Hides the whiteboard element
+
+  }
+  function showWhiteboard() {
+    const whiteboard = document.querySelector('.whiteboard');
+    whiteboard.style.display = 'block'; // Shows the whiteboard element
+  }
+  </script>
+  
+</script>
+</script>
 
 <script src="{{ url_for('static', filename='timer.js') }}"></script>
 <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
@@ -65,3 +87,4 @@
     </script>
 {% endfor %}
 {% endblock %}
+
