@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 
@@ -11,14 +12,66 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+
+
+
+
 }
+.study{
+    font-size:40px;
+}
+
+/* Centered input fields */
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px; /* Add some margin for spacing */
+}
+
+.center-input {
+    width: 300px; /* Adjust the width as needed */
+    padding: 10px; /* Add padding for better appearance */
+    font-size: 18px; /* Increase font size */
+}
+
+
+.Username{
+    font-size: 40px;
+
+
+}
+/* Centered button */
+.center-button {
+    width: 40%;
+    font-size: 22px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    background-color: #007bff; /* Change background color if needed */
+    color: #fff; /* Change text color for better visibility */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;; /* Add some spacing between input and button */
+}
+
+
+
 .join {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
-.create-btn {
-    width: 100%;
+    .create-btn {
+        width: 100%;
+        font-size: 22px; /* Increase font size for emphasis */
+        padding: 15px 20px; /* Increase padding for button size */
+        border-radius: 10px; /* Add border radius for rounded corners */
+        background-color: #007bff; /* Change background color if needed */
+        color: #fff; /* Change text color for better visibility */
+        border: none; /* Remove border for a cleaner look */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    
 }
 .message-box {
     position: absolute;
@@ -66,6 +119,7 @@ h2 {
 
 }
 
+
 .muted {
     font-size: 10px;
     color: darkgray
@@ -80,6 +134,7 @@ h2 {
 .whiteboard {
     
 }
+
 
 
 #whiteboardCanvas {
