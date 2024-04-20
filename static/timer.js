@@ -1,4 +1,4 @@
-// static/script.js
+
 let timerInterval;
 let seconds = 0;
 let minutes = 0;
