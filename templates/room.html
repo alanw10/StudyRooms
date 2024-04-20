@@ -1,17 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class = "timer"> Timer
-<div id="timer">00:00:00</div>
-    <button onclick="startTimer()">Start</button>
-    <button onclick="stopTimer()">Stop</button>
-    <button onclick="resetTimer()">Reset</button>
 
-    <script src="{{ url_for('static', filename='timer.js') }}"></script>
+<h1>Settable Countdown Timer</h1>
+<div>
+    <label for="duration">Set Countdown Duration (seconds):</label>
+    <input type="number" id="duration" name="duration">
+    <button onclick="setTimer()">Set Timer</button>
+</div>
+<div id="timer"></div>
+<div>
+    <button onclick="startTimer()">Start Timer</button>
+    <button onclick="stopTimer()">Stop Timer</button>
+</div>
 </div>
 <div class="whiteboard">Whiteboard
     <canvas id="whiteboardCanvas" height="500" width="500"></canvas>
     <button onclick="clearCanvas()">Clear</button>
 </div>
+
+
 
 <script src="{{ url_for('static', filename='timer.js') }}"></script>
 <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
@@ -50,7 +58,8 @@
         messages.innerHTML += content;
     }
     socketio.on("message", (data) => {
-        createMessage(data.name, data.message);
+        createMessage(data.name, data.message, data.time);
+        
     });
     const sendMessage = () => {
         const message = document.getElementById("message")
@@ -61,7 +70,7 @@
 </script>
 {% for msg in messages %}
     <script> type = "text/javascript"
-        createMessage("{{msg.name}}", "{{msg.message}}");
+        createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
     </script>
 {% endfor %}
 {% endblock %}

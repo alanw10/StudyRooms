@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, session, redirect,url_for
-from flask_socketio import join_room, leave_room, send, SocketIO
+from flask_socketio import join_room, leave_room, send, SocketIO, emit
 import random
-import time
+import time, threading
 from string import ascii_uppercase
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "iloveflask"
 socketio = SocketIO(app)
 
+timers = {}
+countdown_time = 0
+countdown_active = False
 rooms = {}
 def generate_unique_code(len):
     while True:
@@ -17,7 +20,6 @@ def generate_unique_code(len):
         if code not in rooms:
             break
     return code
-
 
 
 
@@ -77,7 +79,8 @@ def connect(auth):
         return
     
     join_room(room)
-    send({"name": name, "message": "has entered the room."}, to=room)
+    send({"name": name, "message": "has entered the room.", "time":  time.strftime("%H:%M:%S",time.localtime())
+}, to=room)
     rooms[room]["members"] += 1
     print(f"{name} joined room {room}")
 @socketio.on("disconnect")
@@ -89,8 +92,33 @@ def disconnect():
         #rooms[room]["members"] -= 1
         #if rooms[room]["members"] <= 0:
             #del rooms[room]
-    send({"name": name, "message": "has left the room."}, to=room)
+    send({"name": name, "message": "has left the room.","time":  time.strftime("%H:%M:%S",time.localtime())
+}, to=room)
     print(f"{name} has left the room.")
 
+@socketio.on('set_timer')
+def set_timer(data):
+    global countdown_time
+    countdown_time = int(data['duration'])
+    emit('timer_event', {'data': f'Timer set to {countdown_time} seconds'})
+
+@socketio.on('start_timer')
+def start_timer():
+    global countdown_active
+    if not countdown_active and countdown_time > 0:
+        countdown_active = True
+        threading.Thread(target=timer).start()
+
+def timer():
+    global countdown_time, countdown_active
+    start_time = time.time()
+    while countdown_time > 0:
+        current_time = int(time.time() - start_time)
+        countdown_time = max(0, countdown_time - 1)
+        socketio.emit('timer', {'time': countdown_time})
+        time.sleep(1)
+    countdown_active = False
+    if countdown_time == 0:
+        socketio.emit('timer_event', {'data': 'Connected'})
 if __name__ == "__main__":
     socketio.run(app, debug=True)
