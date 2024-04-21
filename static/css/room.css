@@ -1,10 +1,10 @@
 .content {
-    display: flex; /* Use flexbox layout */
-    align-items: stretch; /* Stretch children to fill the container height */
-    justify-content: space-between; /* Space out children */
-    height: 100vh; /* Full viewport height */
-    padding: 0; /* Remove padding if any */
-    margin: 0; /* Remove margin if any */
+    display: flex; 
+    align-items: stretch; 
+    justify-content: space-between; 
+    height: 100vh; 
+    padding: 0; 
+    margin: 0; 
 }
 .buttons {
 
@@ -29,12 +29,11 @@
     font-size:40px;
 }
 
-/* Centered input fields */
 
 .center-input {
-    width: 300px; /* Adjust the width as needed */
-    padding: 10px; /* Add padding for better appearance */
-    font-size: 18px; /* Increase font size */
+    width: 300px; 
+    padding: 10px; 
+    font-size: 18px; 
 }
 
 .room-buttons{
@@ -45,19 +44,10 @@
 }
 
 body {
-        margin: 0; /* Remove any default margins */
-        min-height: 100vh; /* Set minimum height for body */
+        margin: 0; 
+        min-height: 100vh;
 }
 
-
-.Username{
-    font-size: 35px;
-    background-color: #fff; 
-    border: 1px solid #ccc; 
-    padding: 5px 10px; 
-
-
-}
 
 
 .join {
@@ -80,11 +70,11 @@ body {
     flex-direction: column;
     align-items: stretch;
     margin-left: 10px;
-    margin-right: 10px; /* Added margin-right */
+    margin-right: 1px; 
     justify-content: space-between;
-    max-width: 350px; /* Set maximum width */
-}
+    max-width: 350px; 
 
+}
 
 .messages {
     overflow-y: scroll;
@@ -140,7 +130,7 @@ h2 {
     display: none;
   }
   
-  /* Style navigation menu links */
+  
   .topnav a {
     color: white;
     padding: 14px 16px;
@@ -149,7 +139,7 @@ h2 {
     display: block;
   }
   
-  /* Style the hamburger menu */
+
   .topnav a.icon {
     background: black;
     display: block;
@@ -158,12 +148,12 @@ h2 {
     top: 0;
   }
   
-  /* Add a grey background color on mouse-over */
+  
   .topnav a:hover {
-    color: black;
+    color: rgb(134, 127, 127);
   }
   
-  /* Style the active link (or home/logo) */
+
   .active {
     background-color: #04AA6D;
     color: white;
@@ -171,7 +161,7 @@ h2 {
 
   }
   .whiteboard-container {
-    flex: 1; /* Allow the whiteboard to grow and fill the space */
+    flex: 1; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -181,7 +171,7 @@ h2 {
 }
 
 .clear-button {
-    margin-bottom: 10px; /* Adjust the spacing between the button and the whiteboard */
+    margin-bottom: 10px; 
     padding: 10px 20px;
     font-size: 16px;
     background-color: #007bff;

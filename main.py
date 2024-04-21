@@ -21,12 +21,10 @@ def generate_unique_code(len):
             break
     return code
 
-
-
 @app.route("/", methods = ["POST", "GET"])
 def home():
     if request.method == "POST":
-        name = "alan"#request.form.get()
+        name = request.form.get("name")
         code = request.form.get("code")
         join = request.form.get("join", False)
         create = request.form.get("create", False)
@@ -37,7 +35,7 @@ def home():
         
         room = code
         if create != False:
-            room = generate_unique_code(8)
+            room = generate_unique_code(6)
             rooms[room] = {"members": 0, "messages": []}
         elif code not in rooms:
             return render_template("home.html", error ="Room doesn't exist", code = code, name=name)
@@ -48,7 +46,7 @@ def home():
 @app.route("/room")
 def room():
     room = session.get("room")
-    if room is None or session.get("name") is None or room not in rooms: # if theres no room, no name, or invalid room
+    if room is None or session.get("name") is None or room not in rooms: 
         return redirect(url_for("home"))
     return render_template("room.html", code = room, messages = rooms[room]["messages"])
 
@@ -62,7 +60,6 @@ def message(data):
         "name": session.get("name"),
         "message": data["data"],
         "time":  time.strftime("%H:%M:%S",time.localtime())
-
     }
     send(content,to=room)
     rooms[room]["messages"].append(content)
@@ -70,31 +67,27 @@ def message(data):
 
 @socketio.on("connect")
 def connect(auth):
-    room = session.get("room")
-    name = session.get("name")
-    if not room or not name:
-        return
-    if room not in rooms:
-        leave_room(room)
-        return
+  room = session.get("room")
+  name = session.get("name")
+  if not room or not name:
+    return
+  if room not in rooms:
+    leave_room(room)
+    return
+  join_room(room)
+  server_timestamp = time.strftime("%H:%M:%S", time.localtime())
+  rooms[room]["members"] += 1
+  print(f"{name} joined room {room}")
     
-    join_room(room)
-    send({"name": name, "message": "has entered the room.", "time":  time.strftime("%H:%M:%S",time.localtime())
-}, to=room)
-    rooms[room]["members"] += 1
-    print(f"{name} joined room {room}")
 @socketio.on("disconnect")
 def disconnect():
     room = session.get("room")
     name = session.get("name")
     leave_room(room)
-    #if room in rooms:
-        #rooms[room]["members"] -= 1
-        #if rooms[room]["members"] <= 0:
-            #del rooms[room]
-    send({"name": name, "message": "has left the room.","time":  time.strftime("%H:%M:%S",time.localtime())
-}, to=room)
-    print(f"{name} has left the room.")
+    if room in rooms:
+        rooms[room]["members"] -= 1
+        if rooms[room]["members"] <= 0:
+            del rooms[room]
 
 @socketio.on('set_timer')
 def set_timer(data):
@@ -109,18 +102,33 @@ def start_timer():
         countdown_active = True
         threading.Thread(target=timer).start()
 
+@socketio.on('toggle_pause')
+def toggle_pause(data):
+    global countdown_active
+    countdown_active = not data['paused'] 
+    if countdown_active and countdown_time > 0:
+        threading.Thread(target=timer).start() 
+
+@socketio.on('reset_timer')
+def reset_timer():
+    global countdown_time, countdown_active
+    countdown_time = 0 #
+    countdown_active = False  
+    socketio.emit('timer', {'time': countdown_time}) 
+
 def timer():
     global countdown_time, countdown_active
     start_time = time.time()
-    while countdown_time > 0:
+    while countdown_time > 0 and countdown_active:  
         current_time = int(time.time() - start_time)
         countdown_time = max(0, countdown_time - 1)
         socketio.emit('timer', {'time': countdown_time})
         time.sleep(1)
-    countdown_active = False
-    if countdown_time == 0:
+    
+    if countdown_time == 0 and countdown_active:  
         socketio.emit('timer_event', {'data': 'Timer Done'})
-
+    
+    countdown_active = False  
 
 @socketio.on('draw')
 def handle_draw(data):

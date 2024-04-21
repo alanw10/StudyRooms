@@ -18,13 +18,14 @@
         <div class="home-background">
             <form method="post" class="buttons">
                 <h3 class="study">Enter A Study Room</h3>
-                <div class="input-container">
-                    <input type="text" placeholder="Username Here" name="name" value="{{ name }}" class="center-input"/>
+                <div class="username">
+                    <input type="text" placeholder="choose a username..." name="name" value="{{ name }}" class="center-input"/>
                 </div>
-                <div class="input-container join">
-                    <input type="text" placeholder="Code Here" name="code" value="{{ code }}" class="center-input"/>
-                    <button type="submit" name="join" class="center-button">Join A Room</button>
+                <div class="room-code">
+                    <input type="text" placeholder="type a room code..." name="code" value="{{ code }}" class="center-input"/>
+                    
                 </div>
+                <button type="submit" name="join" class="join-button">Join A Room</button>
                 <button type="submit" name="create" class="create-btn">Create A Room</button>
                 {% if error %}
                 <ul>

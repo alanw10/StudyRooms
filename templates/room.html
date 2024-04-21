@@ -11,25 +11,22 @@
     <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
 </head>
 <body>
-    <!-- Top Navigation Menu -->
     <div class="topnav">
         <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
             <i class="fa fa-bars"></i>
         </a>
         <a class="active"></a>
         <div id="myLinks">
-            <a href="javascript:void(0);" onclick="toggleTimer()">Toggle Pomodoro Timer</a>
+            <a href="javascript:void(0);" onclick="toggleTimer()">Toggle Timer</a>
             <a href="javascript:void(0);" onclick="leaveRoom()">Leave Room</a>
 
         </div>
     </div>
 
-    <!-- Content Area -->
     <div class="content">
-        <!--Timer-->
         <div class="timer" id="pomodoroTimer" style="display:none;">
             <div class = "timer"> 
-            <h1> Pomodoro Timer</h1>
+            <h1>Timer</h1>
             <div>
                 <label for="duration">Set Time (seconds):</label>
                 <input id="duration" name="duration">
@@ -38,19 +35,18 @@
             <div id="timer"></div>
             <div>
                 <button onclick="startTimer()">Start Timer</button>
-                <button onclick="stopTimer()">Stop Timer</button>
+                <button id="pauseButton" onclick="togglePause()">Pause</button> 
+                <button onclick="resetTimer()">Reset Timer</button>
             </div>
         </div>
     </div>
-        <!-- Whiteboard -->
         <div class="whiteboard-container">
         <button class = "clear-button" onclick="clearWhiteboard()">Clear</button>
-        <canvas id="whiteboard" width="800" height="600" style="border: 5px solid black;"></canvas>
+        <canvas id="whiteboard" width="900" height="600" style="border: 5px solid black;"></canvas>
         <script src="{{ url_for('static', filename='timer.js') }}"></script>
         <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
     </div>
 
-    <!-- Scripts for functionality -->
     <script>
         function toggleMenu() {
             var x = document.getElementById("myLinks");
@@ -70,8 +66,7 @@
             }
         }
         function leaveRoom() {
-            // Implement the logic to leave the room, e.g., redirect to home page
-            window.location.href = '/'; // Redirects to the home page (or any other URL)
+            window.location.href = '/'; 
         }
         function clearWhiteboard() {
             var canvas = document.getElementById('whiteboard');
@@ -84,7 +79,7 @@
             <div class = "messages" id="messages"> </div>
             <div class = "inputs">
                 <input type = "text" rows = "3" placeholder="Message" name = "message" id = "message"/>
-                <button type = "button" name = "send" class = "sent-btn id = "sent-btn" onClick = "sendMessage()">
+                <button type = "button" name = "send" class = "sent-btn" id = "sent-btn" onClick = "sendMessage()">
                     Send 
                 </button>
             </div>
@@ -124,4 +119,4 @@
             {% endfor %}
     </div>
 </body>
-</html>
+</html> 
