@@ -20,3 +20,4 @@ function startTimer() {
 function stopTimer() {
     alert('Timer stopped');
 }
+

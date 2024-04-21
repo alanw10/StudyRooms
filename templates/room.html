@@ -1,99 +1,99 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class = "timer"> Timer
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class = "timer"> 
 
-<h1>Settable Countdown Timer</h1>
-<div>
-    <label for="duration">Set Countdown Duration (seconds):</label>
-    <input type="number" id="duration" name="duration">
-    <button onclick="setTimer()">Set Timer</button>
-</div>
-<div id="timer"></div>
-<div>
-    <button onclick="startTimer()">Start Timer</button>
-    <button onclick="stopTimer()">Stop Timer</button>
-</div>
-</div>
-<div class="whiteboard">Whiteboard
-    <canvas id="whiteboardCanvas" height="500" width="500"></canvas>
-    <button onclick="clearCanvas()">Clear</button>
-</div>
-<button onclick="hideWhiteboard()">Hide Whiteboard</button>
-<button onclick-"showWhiteboard()">Show Whiteboard</button>
-<script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
-<script>
-window.addEventListener('load', function () {
-  initWhiteboard();
-});
-
-
-function hideWhiteboard() {
-    const whiteboard = document.querySelector('.whiteboard');
-    whiteboard.style.display = 'none'; // Hides the whiteboard element
-
-  }
-  function showWhiteboard() {
-    const whiteboard = document.querySelector('.whiteboard');
-    whiteboard.style.display = 'block'; // Shows the whiteboard element
-  }
-  </script>
-  
-</script>
-</script>
-
-
-
-<script src="{{ url_for('static', filename='timer.js') }}"></script>
-<script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
-<script>
-    window.addEventListener('load', function () {
-        initWhiteboard();
-    });
-</script>
-</div>
-</div>
-<div class = "message-box">
-    <h2>Chat Code: {{code}}</h2>
-    <div class = "messages" id="messages"> </div>
-    <div class = "inputs">
-        <input type = "text" rows = "3" placeholder="Message" name = "message" id = "message"/>
-        <button type = "button" name = "send" id = "sent-btn" onClick = "sendMessage()">
-            Send 
-        </button>
+    <h1>Countdown Timer</h1>
+    <div>
+        <label for="duration">Set Countdown Duration (seconds):</label>
+        <input type="number" id="duration" name="duration">
+        <button onclick="setTimer()", class = "room-buttons">Set Timer</button>
     </div>
-</div>
-<script type = "text/javascript">
-    var socketio = io();
-    const messages = document.getElementById("messages")
-    const createMessage = (name, msg, time) => {
-        const content = `
-        <div class = "text">
-        <div>
-            <span>
-                <strong>${name}</strong>: ${msg}
-            </span>
-            <span class = "muted">
-                ${time}
-        </div>
-
-        `;
-        messages.innerHTML += content;
-    }
-    socketio.on("message", (data) => {
-        createMessage(data.name, data.message, data.time);
-        
+    <div id="timer"></div>
+    <div>
+        <button onclick="startTimer()", class = "room-buttons">Start Timer</button>
+        <button onclick="stopTimer()", class = "room-buttons">Stop Timer</button>
+    </div>
+    </div>
+    <div class="whiteboard">Whiteboard
+        <canvas id="whiteboardCanvas" height="500" width="500"></canvas>
+        <button onclick="clearCanvas()">Clear</button>
+    </div>
+    <button onclick="hideWhiteboard()">Hide Whiteboard</button>
+    <button onclick-"showWhiteboard()">Show Whiteboard</button>
+    <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
+    <script>
+    window.addEventListener('load', function () {
+    initWhiteboard();
     });
-    const sendMessage = () => {
-        const message = document.getElementById("message")
-        if (message.value == "") return;
-        socketio.emit("message", {data: message.value})
-        message.value = "";
+
+
+    function hideWhiteboard() {
+        const whiteboard = document.querySelector('.whiteboard');
+        whiteboard.style.display = 'none'; // Hides the whiteboard element
+
     }
-</script>
-{% for msg in messages %}
-    <script> type = "text/javascript"
-        createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
+    function showWhiteboard() {
+        const whiteboard = document.querySelector('.whiteboard');
+        whiteboard.style.display = 'block'; // Shows the whiteboard element
+    }
     </script>
-{% endfor %}
-{% endblock %}
+    
+    </script>
+    </script>
+
+
+
+    <script src="{{ url_for('static', filename='timer.js') }}"></script>
+    <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
+    <script>
+        window.addEventListener('load', function () {
+            initWhiteboard();
+        });
+    </script>
+    </div>
+    </div>
+    <div class = "message-box">
+        <h2>Chat Code: {{code}}</h2>
+        <div class = "messages" id="messages"> </div>
+        <div class = "inputs">
+            <input type = "text" rows = "3" placeholder="Message" name = "message" id = "message"/>
+            <button type = "button" name = "send" id = "sent-btn" onClick = "sendMessage()">
+                Send 
+            </button>
+        </div>
+    </div>
+    <script type = "text/javascript">
+        var socketio = io();
+        const messages = document.getElementById("messages")
+        const createMessage = (name, msg, time) => {
+            const content = `
+            <div class = "text">
+            <div>
+                <span>
+                    <strong>${name}</strong>: ${msg}
+                </span>
+                <span class = "muted">
+                    ${time}
+            </div>
+
+            `;
+            messages.innerHTML += content;
+        }
+        socketio.on("message", (data) => {
+            createMessage(data.name, data.message, data.time);
+            
+        });
+        const sendMessage = () => {
+            const message = document.getElementById("message")
+            if (message.value == "") return;
+            socketio.emit("message", {data: message.value})
+            message.value = "";
+        }
+    </script>
+    {% for msg in messages %}
+        <script> type = "text/javascript"
+            createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
+        </script>
+    {% endfor %}
+    {% endblock %}
 
