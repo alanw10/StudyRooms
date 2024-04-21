@@ -1,80 +1,126 @@
-    {% extends 'base.html' %}
-    {% block content %}
-    <div class = "timer"> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/room.css')}}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='timer.js') }}"></script>
+    <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
+</head>
+<body>
+    <!-- Top Navigation Menu -->
+    <div class="topnav">
+        <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a href="#home" class="active">Logo</a>
+        <div id="myLinks">
+            <a href="javascript:void(0);" onclick="toggleTimer()">Pomodoro Timer</a>
+            <a href="javascript:void(0);" onclick="leaveRoom()">Leave Room</a>
 
-<h1>Settable Countdown Timer</h1>
-<div>
-    <label for="duration">Set Countdown Duration (seconds):</label>
-    <input id="duration" name="duration">
-    <button onclick="setTimer()">Set Timer</button>
-</div>
-<div id="timer"></div>
-<div>
-    <button onclick="startTimer()">Start Timer</button>
-    <button onclick="stopTimer()">Stop Timer</button>
-</div>
-</div>
-<canvas id="whiteboard" width="800" height="600" style="border: 5px solid black;"></canvas>
-<script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
-<script>
-//function hideWhiteboard() {
-    //const whiteboard = document.getElementById('whiteboard');
-    //whiteboard.style.display = 'none'; 
-
-  //}
-  //function showWhiteboard() {
-   // const whiteboard = document.querySelector('.whiteboard');
-    //whiteboard.style.display = 'block'; 
-  //}
- </script>
-  
-<script src="{{ url_for('static', filename='timer.js') }}"></script>
-<script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
-
-</div>
-</div>
-<div class = "message-box">
-    <h2>Chat Code: {{code}}</h2>
-    <div class = "messages" id="messages"> </div>
-    <div class = "inputs">
-        <input type = "text" rows = "3" placeholder="Message" name = "message" id = "message"/>
-        <button type = "button" name = "send" id = "sent-btn" onClick = "sendMessage()">
-            Send 
-        </button>
-    </div>
-</div>
-<script type = "text/javascript">
-    var socketio = io();
-    const messages = document.getElementById("messages")
-    const createMessage = (name, msg, time) => {
-        const content = `
-        <div class = "text">
-        <div>
-            <span>
-                <strong>${name}</strong>: ${msg}
-            </span>
-            <span class = "muted">
-                ${time}
         </div>
+    </div>
 
-            `;
-            messages.innerHTML += content;
+    <!-- Content Area -->
+    <div class="content">
+        <!--Timer-->
+        <div class="timer" id="pomodoroTimer" style="display:none;">
+            <div class = "timer"> 
+            <h1>Pomodoro Timer</h1>
+            <div>
+                <label for="duration">Set Time (seconds):</label>
+                <input id="duration" name="duration">
+                <button onclick="setTimer()">Set Timer</button>
+            </div>
+            <div id="timer"></div>
+            <div>
+                <button onclick="startTimer()">Start Timer</button>
+                <button onclick="stopTimer()">Stop Timer</button>
+            </div>
+        </div>
+    </div>
+        <!-- Whiteboard -->
+        <button onclick="clearWhiteboard()">Clear Whiteboard</button>
+        <canvas id="whiteboard" width="800" height="600" style="border: 5px solid black;"></canvas>
+        <script src="{{ url_for('static', filename='timer.js') }}"></script>
+        <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
+        
+
+    <!-- Scripts for functionality -->
+    <script>
+        function toggleMenu() {
+            var x = document.getElementById("myLinks");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
         }
-        socketio.on("message", (data) => {
-            createMessage(data.name, data.message, data.time);
-            
-        });
-        const sendMessage = () => {
-            const message = document.getElementById("message")
-            if (message.value == "") return;
-            socketio.emit("message", {data: message.value})
-            message.value = "";
+
+        function toggleTimer() {
+            var timer = document.getElementById("pomodoroTimer");
+            if (timer.style.display === "block") {
+                timer.style.display = "none";
+            } else {
+                timer.style.display = "block";
+            }
+        }
+        function leaveRoom() {
+            // Implement the logic to leave the room, e.g., redirect to home page
+            window.location.href = '/'; // Redirects to the home page (or any other URL)
+        }
+        function clearWhiteboard() {
+            var canvas = document.getElementById('whiteboard');
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
         }
     </script>
-    {% for msg in messages %}
-        <script> type = "text/javascript"
-            createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
-        </script>
-    {% endfor %}
-    {% endblock %}
-
+        <div class = "message-box">
+            <h2>Chat Code: {{code}}</h2>
+            <div class = "messages" id="messages"> </div>
+            <div class = "inputs">
+                <input type = "text" rows = "3" placeholder="Message" name = "message" id = "message"/>
+                <button type = "button" name = "send" id = "sent-btn" onClick = "sendMessage()">
+                    Send 
+                </button>
+            </div>
+        </div>
+        <script type = "text/javascript">
+            var socketio = io();
+            const messages = document.getElementById("messages")
+            const createMessage = (name, msg, time) => {
+                const content = `
+                <div class = "text">
+                <div>
+                    <span>
+                        <strong>${name}</strong>: ${msg}
+                    </span>
+                    <span class = "muted">
+                        ${time}
+                </div>
+        
+                    `;
+                    messages.innerHTML += content;
+                }
+                socketio.on("message", (data) => {
+                    createMessage(data.name, data.message, data.time);
+                    
+                });
+                const sendMessage = () => {
+                    const message = document.getElementById("message")
+                    if (message.value == "") return;
+                    socketio.emit("message", {data: message.value})
+                    message.value = "";
+                }
+            </script>
+            {% for msg in messages %}
+                <script> type = "text/javascript"
+                    createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
+                </script>
+            {% endfor %}
+    </div>
+</body>
+</html>
