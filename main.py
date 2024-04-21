@@ -5,7 +5,7 @@ import time, threading
 from string import ascii_uppercase
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "iloveflask"
+app.config["SECRET_KEY"] = ""
 socketio = SocketIO(app)
 
 timers = {}
