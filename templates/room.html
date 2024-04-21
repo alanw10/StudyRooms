@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat App</title>
+    <title>Study Rooms</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/room.css')}}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
@@ -18,7 +18,7 @@
         </a>
         <a class="active"></a>
         <div id="myLinks">
-            <a href="javascript:void(0);" onclick="toggleTimer()">Pomodoro Timer</a>
+            <a href="javascript:void(0);" onclick="toggleTimer()">Toggle Pomodoro Timer</a>
             <a href="javascript:void(0);" onclick="leaveRoom()">Leave Room</a>
 
         </div>
@@ -29,7 +29,7 @@
         <!--Timer-->
         <div class="timer" id="pomodoroTimer" style="display:none;">
             <div class = "timer"> 
-            <h1>Pomodoro Timer</h1>
+            <h1> Pomodoro Timer</h1>
             <div>
                 <label for="duration">Set Time (seconds):</label>
                 <input id="duration" name="duration">
@@ -44,7 +44,7 @@
     </div>
         <!-- Whiteboard -->
         <div class="whiteboard-container">
-        <button class = "clear-button" onclick="clearWhiteboard()">Clear Whiteboard</button>
+        <button class = "clear-button" onclick="clearWhiteboard()">Clear</button>
         <canvas id="whiteboard" width="800" height="600" style="border: 5px solid black;"></canvas>
         <script src="{{ url_for('static', filename='timer.js') }}"></script>
         <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
@@ -80,11 +80,11 @@
         }
     </script>
         <div class = "message-box">
-            <h2>Chat Code: {{code}}</h2>
+            <h2>Room Code: {{code}}</h2>
             <div class = "messages" id="messages"> </div>
             <div class = "inputs">
                 <input type = "text" rows = "3" placeholder="Message" name = "message" id = "message"/>
-                <button type = "button" name = "send" id = "sent-btn" onClick = "sendMessage()">
+                <button type = "button" name = "send" class = "sent-btn id = "sent-btn" onClick = "sendMessage()">
                     Send 
                 </button>
             </div>
