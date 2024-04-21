@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class = "timer"> Timer
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class = "timer"> 
 
 <h1>Settable Countdown Timer</h1>
 <div>
@@ -58,24 +58,24 @@
                 ${time}
         </div>
 
-        `;
-        messages.innerHTML += content;
-    }
-    socketio.on("message", (data) => {
-        createMessage(data.name, data.message, data.time);
-        
-    });
-    const sendMessage = () => {
-        const message = document.getElementById("message")
-        if (message.value == "") return;
-        socketio.emit("message", {data: message.value})
-        message.value = "";
-    }
-</script>
-{% for msg in messages %}
-    <script> type = "text/javascript"
-        createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
+            `;
+            messages.innerHTML += content;
+        }
+        socketio.on("message", (data) => {
+            createMessage(data.name, data.message, data.time);
+            
+        });
+        const sendMessage = () => {
+            const message = document.getElementById("message")
+            if (message.value == "") return;
+            socketio.emit("message", {data: message.value})
+            message.value = "";
+        }
     </script>
-{% endfor %}
-{% endblock %}
+    {% for msg in messages %}
+        <script> type = "text/javascript"
+            createMessage("{{msg.name}}", "{{msg.message}}", "{{msg.time}}");
+        </script>
+    {% endfor %}
+    {% endblock %}
 

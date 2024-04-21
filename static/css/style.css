@@ -2,32 +2,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    min-height: 100vh; /* Set minimum height to cover viewport */
+    /* Apply background here */
 }
-
-
 .buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
 
-
-
-
+        background-color: rgba(255, 255, 255, 0.8); /* Adjust the opacity as needed */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+    
+.home-background{
+    background: linear-gradient(to top, #09203f 0%, #537895 100%);
+      
 }
+
+
+
 .study{
     font-size:40px;
 }
 
 /* Centered input fields */
-.input-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px; /* Add some margin for spacing */
-}
 
 .center-input {
     width: 300px; /* Adjust the width as needed */
@@ -35,13 +32,35 @@
     font-size: 18px; /* Increase font size */
 }
 
+.room-buttons{
+    background-color: #fff; 
+    border: 1px solid #ccc; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+}
+
+body {
+        margin: 0; /* Remove any default margins */
+        min-height: 100vh; /* Set minimum height for body */
+}
+
 
 .Username{
-    font-size: 40px;
+    font-size: 35px;
+    background-color: #fff; 
+    border: 1px solid #ccc; 
+    padding: 5px 10px; 
 
 
 }
 /* Centered button */
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px; /* Add some margin for spacing */
+}
 .center-button {
     width: 40%;
     font-size: 22px;
@@ -53,7 +72,6 @@
     cursor: pointer;
     transition: background-color 0.3s ease;; /* Add some spacing between input and button */
 }
-
 
 
 .join {
@@ -73,6 +91,7 @@
         transition: background-color 0.3s ease;
     
 }
+
 .message-box {
     position: absolute;
     border-color: rgb(0, 110, 0);

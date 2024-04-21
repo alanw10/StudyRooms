@@ -1,20 +1,22 @@
 {% extends 'base.html' %} 
 {% block content %}
-<form method="post" class="buttons">
-    <h3 class="study">Enter A Study Room</h3>
-    <div class="input-container">
-        <label class = "Username">Username:</label>
-        <input type="text" placeholder="Type Here" name="name" value="{{name}}" class="center-input"/>
-    </div>
-    <div class="input-container join">
-        <input type="text" placeholder="Type Here" name="code" value="{{code}}" class="center-input"/>
-        <button type="submit" name="join" class="center-button">Join A Room</button>
-    </div>
-    <button type="submit" name="create" class="create-btn">Create A Room</button>
-    {% if error %}
-    <ul>
-        <li>{{error}}</li>
-    </ul>
-    {% endif %}
-</form>
+<div class="home-background">
+    <form method="post" class="buttons">
+        <h3 class="study">Enter A Study Room</h3>
+        <div class="input-container">
+            <label class="Username">Username:</label>
+            <input type="text" placeholder="Type Here" name="name" value="{{ name }}" class="center-input"/>
+        </div>
+        <div class="input-container join">
+            <input type="text" placeholder="Type Here" name="code" value="{{ code }}" class="center-input"/>
+            <button type="submit" name="join" class="center-button">Join A Room</button>
+        </div>
+        <button type="submit" name="create" class="create-btn">Create A Room</button>
+        {% if error %}
+        <ul>
+            <li>{{ error }}</li>
+        </ul>
+        {% endif %}
+    </form>
+</div>
 {% endblock %}
