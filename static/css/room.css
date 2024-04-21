@@ -105,7 +105,7 @@ body {
     width: 30vw;
     align-items: stretch;
     left: 110px;
-
+    margin-left: 10px;
 }
 
 .messages {
@@ -189,4 +189,21 @@ h2 {
   .active {
     background-color: #04AA6D;
     color: white;
+    height: 20px;
   }
+  .whiteboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clear-button {
+    margin-bottom: 10px; /* Adjust the spacing between the button and the whiteboard */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -16,7 +16,7 @@
         <a href="javascript:void(0);" class="icon" onclick="toggleMenu()">
             <i class="fa fa-bars"></i>
         </a>
-        <a href="#home" class="active">Logo</a>
+        <a class="active"></a>
         <div id="myLinks">
             <a href="javascript:void(0);" onclick="toggleTimer()">Pomodoro Timer</a>
             <a href="javascript:void(0);" onclick="leaveRoom()">Leave Room</a>
@@ -43,11 +43,12 @@
         </div>
     </div>
         <!-- Whiteboard -->
-        <button onclick="clearWhiteboard()">Clear Whiteboard</button>
+        <div class="whiteboard-container">
+        <button class = "clear-button" onclick="clearWhiteboard()">Clear Whiteboard</button>
         <canvas id="whiteboard" width="800" height="600" style="border: 5px solid black;"></canvas>
         <script src="{{ url_for('static', filename='timer.js') }}"></script>
         <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
-        
+    </div>
 
     <!-- Scripts for functionality -->
     <script>
