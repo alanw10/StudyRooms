@@ -5,7 +5,7 @@
 <h1>Settable Countdown Timer</h1>
 <div>
     <label for="duration">Set Countdown Duration (seconds):</label>
-    <input type="number" id="duration" name="duration">
+    <input id="duration" name="duration">
     <button onclick="setTimer()">Set Timer</button>
 </div>
 <div id="timer"></div>
@@ -14,42 +14,24 @@
     <button onclick="stopTimer()">Stop Timer</button>
 </div>
 </div>
-<div class="whiteboard">Whiteboard
-    <canvas id="whiteboardCanvas" height="500" width="500"></canvas>
-    <button onclick="clearCanvas()">Clear</button>
-</div>
-<button onclick="hideWhiteboard()">Hide Whiteboard</button>
-<button onclick-"showWhiteboard()">Show Whiteboard</button>
+<canvas id="whiteboard" width="800" height="600" style="border: 5px solid black;"></canvas>
 <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
 <script>
-window.addEventListener('load', function () {
-  initWhiteboard();
-});
+//function hideWhiteboard() {
+    //const whiteboard = document.getElementById('whiteboard');
+    //whiteboard.style.display = 'none'; 
 
-
-function hideWhiteboard() {
-    const whiteboard = document.querySelector('.whiteboard');
-    whiteboard.style.display = 'none'; // Hides the whiteboard element
-
-  }
-  function showWhiteboard() {
-    const whiteboard = document.querySelector('.whiteboard');
-    whiteboard.style.display = 'block'; // Shows the whiteboard element
-  }
-  </script>
+  //}
+  //function showWhiteboard() {
+   // const whiteboard = document.querySelector('.whiteboard');
+    //whiteboard.style.display = 'block'; 
+  //}
+ </script>
   
-</script>
-</script>
-
-
 
 <script src="{{ url_for('static', filename='timer.js') }}"></script>
 <script src="{{ url_for('static', filename='whiteboard.js') }}"></script>
-<script>
-    window.addEventListener('load', function () {
-        initWhiteboard();
-    });
-</script>
+
 </div>
 </div>
 <div class = "message-box">

@@ -1,50 +1,45 @@
+var socket = io();
 
-let canvas;
-let ctx;
-let isDrawing = false;
+var canvas = document.getElementById('whiteboard');
+var ctx = canvas.getContext('2d');
 
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseout', stopDrawing); 
 
-function initWhiteboard() {
-    canvas = document.getElementById('whiteboardCanvas');
-    ctx = canvas.getContext('2d');
-
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', endDrawing);
-    canvas.addEventListener('mouseout', endDrawing);
-}
-
+var isDrawing = false;
+var startX;
+var startY;
 
 function startDrawing(e) {
     isDrawing = true;
-    draw(e);
+    startX = e.offsetX;
+    startY = e.offsetY;
 }
-
 
 function draw(e) {
-    if (!isDrawing) return;x
-
-    const x = e.clientX - canvas.offsetLeft;
-    const y = e.clientY - canvas.offsetTop;
-
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000'; 
-
-    ctx.lineTo(x, y);
+    if (!isDrawing) return;
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
+
+    
+    socket.emit('draw', { startX: startX, startY: startY, endX: e.offsetX, endY: e.offsetY });
+
+    // Update the start position for the next segment
+    startX = e.offsetX;
+    startY = e.offsetY;
 }
 
-
-function endDrawing() {
+function stopDrawing() {
     isDrawing = false;
+}
+
+socket.on('draw', function(data) {
     ctx.beginPath();
-}
-
-
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
+    ctx.moveTo(data.startX, data.startY);
+    ctx.lineTo(data.endX, data.endY);
+    ctx.stroke();
+});

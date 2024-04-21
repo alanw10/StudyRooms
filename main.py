@@ -119,6 +119,12 @@ def timer():
         time.sleep(1)
     countdown_active = False
     if countdown_time == 0:
-        socketio.emit('timer_event', {'data': 'Connected'})
+        socketio.emit('timer_event', {'data': 'Timer Done'})
+
+
+@socketio.on('draw')
+def handle_draw(data):
+    socketio.emit('draw', data)
+    
 if __name__ == "__main__":
     socketio.run(app, debug=True)
